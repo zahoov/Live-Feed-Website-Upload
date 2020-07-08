@@ -1,0 +1,49 @@
+from wordpress_xmlrpc.methods import posts
+from wordpress_xmlrpc import Client, WordPressPost
+from wordpress_xmlrpc.methods.posts import GetPosts, NewPost
+from wordpress_xmlrpc import WordPressPage
+
+
+def main():
+    # content = input('Please enter the content of your post\
+
+    my_site = Client('https://hydratester.wordpress.com/xmlrpc.php', 'xavier82a6ba0827', 'Hydratester')
+
+    page = WordPressPage()
+    page.title = 'Truck Engine Live Feed'
+    page.content = content_former()
+    page.post_status = 'publish'
+    page.id = 49
+    my_site.call(posts.EditPost(page.id, page))
+
+
+def content_former():
+    i = 0
+    vals = []
+    formed_content = ''
+    data_titles = ['Date: ', 'H2 Mass: ', 'RPM: ', 'H2 Rail Pressure:', 'Tank Pressure:', 'Tank 1 Temp: ',
+                   'Tank 2 Temp: ', 'Tank 3 Temp: ', 'Tank 4 Temp: ', 'Tank 5 Temp: ']
+
+    with open("hydraFL_RBP16_liveUpdate-Hmass.txt", 'r') as file:
+        first_line = file.readline()
+        for last_line in file:
+            pass
+
+    while i < 10:
+        vals.append(str(data_titles[i]) + ' ' + str(last_line.split("\t")[i:][0]) + '\n')
+
+        i = i + 1
+
+    i = 0
+
+    while i < 10:
+        formed_content = formed_content + str(vals[i])
+        i = i + 1
+
+    print(formed_content)
+
+    return formed_content
+
+
+if __name__ == '__main__':
+    main()
